@@ -13,6 +13,11 @@ module turtle.runner.Runner;
 
 import Version;
 
+static if (is(typeof(version_info)))
+    alias version_info v_info;
+else
+    alias versionInfo v_info;
+
 import core.thread;
 import core.sys.posix.sys.stat;
 
@@ -532,7 +537,7 @@ class TurtleRunner ( TaskT ) : CliApp
         if (name.length == 0)
             name = binary;
         auto desc = "External functional test suite for " ~ name;
-        super(name, desc, versionInfo);
+        super(name, desc, v_info);
 
         this.task = new TaskT();
 
