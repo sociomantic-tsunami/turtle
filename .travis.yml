@@ -26,4 +26,4 @@ env:
 
 install: beaver install
 
-script: BEAVER_DOCKER_VARS="DC DIST" beaver run ci/travis.sh
+script: BEAVER_DOCKER_VARS="DC" beaver run ci/travis.sh
