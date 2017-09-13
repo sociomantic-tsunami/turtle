@@ -88,7 +88,7 @@ static this ( )
 
 private class SimpleLayout : Appender.Layout
 {
-    import ocean.text.convert.Format;
+    import ocean.text.convert.Formatter;
 
     private static int indent_count;
 
@@ -100,7 +100,7 @@ private class SimpleLayout : Appender.Layout
     override void format (LogEvent event, size_t delegate(Const!(void)[]) dg)
     {
         static mstring buffer;
-        Format.format(buffer, "[{0,-10}] ", event.name);
+        sformat(buffer, "[{0,-10}] ", event.name);
 
         dg (buffer[]);
         for (int i = 0; i < SimpleLayout.indent_count; i++)

@@ -183,7 +183,7 @@ class Test1 : TestCase
 
 class Test2 : MultiTestCase
 {
-    import ocean.text.convert.Format;
+    import ocean.text.convert.Formatter;
     import ocean.core.Test;
 
     static class NestedTest : TestCase
@@ -197,7 +197,7 @@ class Test2 : MultiTestCase
 
         override public Description description ( )
         {
-            return Description(Format("Nested test #{}", this.num), false, false, 0);
+            return Description(format("Nested test #{}", this.num), false, false, 0);
         }
 
         override public void run ( )
