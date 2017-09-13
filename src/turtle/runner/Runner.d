@@ -30,13 +30,13 @@ import ocean.stdc.posix.sys.un;
 import ocean.io.FilePath;
 import ocean.io.Stdout;
 import ocean.sys.Environment;
-import ocean.util.log.Log;
 import ocean.util.app.CliApp;
 import ocean.task.Scheduler;
 import ocean.task.Task;
 import ocean.task.extensions.ExceptionForwarding;
 import ocean.task.util.Timer;
 import ocean.text.Arguments;
+import ocean.util.log.Logger;
 
 import turtle.TestCase;
 import turtle.Exception;

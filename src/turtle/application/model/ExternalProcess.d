@@ -15,7 +15,7 @@ import core.stdc.stdlib;
 import core.sys.posix.signal;
 
 import ocean.transition;
-import ocean.util.log.Log;
+import ocean.util.log.Logger;
 import ocean.text.Util;
 import ocean.text.convert.Format;
 import ocean.sys.ErrnoException;

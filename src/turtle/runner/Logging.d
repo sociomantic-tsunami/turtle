@@ -11,12 +11,12 @@
 module turtle.runner.Logging;
 
 import ocean.transition;
-import ocean.util.log.Log;
+import ocean.util.log.Logger;
 import ocean.util.log.AppendConsole;
 import ocean.util.log.Appender;
 import ocean.util.log.Event;
 
-public import ocean.util.log.Log : Level;
+public import ocean.util.log.Logger : Level;
 
 /*******************************************************************************
 
