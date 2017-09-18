@@ -181,6 +181,24 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
 
     /***************************************************************************
 
+        Augments overriden `reset` with sending command to control unix socket
+        if it is initialized.
+
+    ***************************************************************************/
+
+    private void resetSync ( )
+    {
+        this.reset();
+
+        if (this.context.control_socket !is null)
+        {
+            enforce!(TurtleException)(
+                sendCommand(this.context.control_socket, "reset") == "ACK");
+        }
+    }
+
+    /***************************************************************************
+
         Allows to temporarily disable some test cases when overridden
 
         Returns:
@@ -285,10 +303,13 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
             }
 
             if (this.config.test_id >= 0)
-                return Actions.runOne(this.config, this.context, &this.reset);
+            {
+                return Actions.runOne(this.config, this.context,
+                    &this.resetSync);
+            }
 
-            return Actions.runAll(this.config, this.context, &this.reset,
-                this.disabledTestCases());
+            return Actions.runAll(this.config, this.context,
+                &this.resetSync, this.disabledTestCases());
         }
         catch (Exception e)
         {
@@ -479,12 +500,7 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
         // user hook to reset service state
         // normally called between tests but also runs once before to
         // ensure consistent state
-        this.reset();
-        if (this.context.control_socket !is null)
-        {
-            enforce!(TurtleException)(
-                sendCommand(this.context.control_socket, "reset") == "ACK");
-        }
+        this.resetSync();
     }
 }
 
