@@ -11,13 +11,37 @@
 
 *******************************************************************************/
 
-static import core.thread;
-import ocean.core.Time;
+import ocean.transition;
+import ocean.io.select.EpollSelectDispatcher;
+import ocean.net.server.unix.UnixListener;
+import ocean.text.convert.Formatter;
 
 void main ( )
 {
-    while (true)
+    auto epoll = new EpollSelectDispatcher;
+
+    int reset_counter;
+
+    void reset_handler ( cstring args, void delegate ( cstring
+        response ) send_response )
     {
-        core.thread.Thread.sleep(seconds(1));
+        ++reset_counter;
+        send_response("ACK");
     }
+
+    void count_handler ( cstring args, void delegate ( cstring
+        response ) send_response )
+    {
+        send_response(format("{}", reset_counter));
+    }
+
+    auto un_listener = new UnixListener(
+        "turtle.socket",
+        epoll,
+        [ "reset"[] : &reset_handler,
+          "total" : &count_handler ]
+    );
+
+    epoll.register(un_listener);
+    epoll.eventLoop();
 }

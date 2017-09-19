@@ -14,6 +14,7 @@ $B/dummy_cli: $C/src/dummy_cli/main.d
 $B/dummy_daemon: $C/src/dummy_daemon/main.d
 
 $O/test-notrunning.stamp: $B/dummy_cli
+$O/test-controlsocket.stamp: $B/dummy_daemon
 
 # examples of turtle usage
 $B/example-daemon: $C/example/daemon/main.d
