@@ -28,7 +28,6 @@ import ocean.core.Enforce;
 import ocean.core.Array;
 import ocean.stdc.posix.sys.un;
 import ocean.io.FilePath;
-import ocean.io.Path;
 import ocean.io.Stdout;
 import ocean.sys.Environment;
 import ocean.util.log.Log;
@@ -485,7 +484,7 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
         // try connecting to unix socket at path `pwd`/turtle.socket in case
         // it was created by tested app
         auto socket_path = Environment.toAbsolute("turtle.socket".dup);
-        if (FS.exists(socket_path))
+        if (FilePath(socket_path).exists())
         {
             .log.trace("Found {}, connecting", socket_path);
             auto addr = sockaddr_un.create(socket_path);
