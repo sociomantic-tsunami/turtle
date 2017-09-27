@@ -184,11 +184,11 @@ abstract class TestedApplicationBase
     public abstract void stop ( )
     {
         auto sec = cast(uint) this.stop_wait_delay;
-        auto nsec = cast(uint) ((this.stop_wait_delay - sec)
-            * 1_000_000_000);
+        auto millisec = cast(uint) ((this.stop_wait_delay - sec)
+            * 1_000);
         // fire first event as soon as possible and others with
         // defined interval if needed
-        this.kill_timer.set(0, 1, sec, nsec);
+        this.kill_timer.set(0, 1, sec, millisec);
         theScheduler.epoll.register(this.kill_timer);
     }
 
