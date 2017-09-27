@@ -37,30 +37,6 @@ abstract class TestedApplicationBase
 {
     /***************************************************************************
 
-        Binds together timer initiating kill signals and index variable
-        indicating which signal to send on each event trigger. Ensures
-        index is reset each time timer is reset.
-
-    ***************************************************************************/
-
-    final class KillTimerEvent : TimerEvent
-    {
-        int signal_id = 0;
-
-        public this ( TimerEvent.Handler handler)
-        {
-            super(handler);
-        }
-
-        override public typeof(TimerEvent.reset()) reset ( )
-        {
-            this.signal_id = 0;
-            return super.reset();
-        }
-    }
-
-    /***************************************************************************
-
         Timer instance used for iteratively trying to kill application
         with different signals. Can't be FiberTimerEvent because needs to be
         callable from epoll callback.
@@ -130,7 +106,7 @@ abstract class TestedApplicationBase
 
     public this ( cstring executable_name, cstring sandbox )
     {
-        this.kill_timer = new KillTimerEvent(&this.nextSignal);
+        this.kill_timer = new KillTimerEvent(this);
         this.executable_name = executable_name;
         this.executable_path = Path.join(sandbox, executable_name);
 
@@ -206,39 +182,6 @@ abstract class TestedApplicationBase
         return this.process.pid();
     }
 
-    /***************************************************************************
-
-        Called by timer event when app shutdown process has been started,
-        attempts new kind of signal each time event repeats.
-
-        Returns:
-            'true' if timer event needs to stay registered, 'false' otherwise
-
-    ***************************************************************************/
-
-    private bool nextSignal ( )
-    {
-        static signal_order = [ SIGTERM, SIGKILL, SIGABRT ];
-        static signal_names = [ "SIGTERM", "SIGKILL", "SIGABRT" ];
-
-        if (!this.isRunning())
-            return false;
-
-        auto i = this.kill_timer.signal_id;
-
-        if (i >= signal_order.length)
-        {
-            .log.error("Tested application kept running even after SIGABRT");
-            assert(false);
-        }
-
-        log.trace("Sending {} to the tested application (pid {})",
-            signal_names[i], this.pid());
-        this.process.kill(signal_order[i]);
-        this.kill_timer.signal_id++;
-
-        return true;
-    }
 
     /***************************************************************************
 
@@ -272,5 +215,81 @@ abstract class TestedApplicationBase
             (stats.st_mode & S_IXUSR) != 0,
             cast(istring)(this.executable_path ~ " is not an executable")
         );
+    }
+}
+
+/*******************************************************************************
+
+    Binds together timer initiating kill signals and index variable indicating
+    which signal to send on each event trigger. Ensures index is reset each time
+    timer is reset.
+
+*******************************************************************************/
+
+private final class KillTimerEvent : TimerEvent
+{
+    /// Reference to bound application
+    private TestedApplicationBase app;
+    /// Indicates which signal number to use next
+    private int signal_id = 0;
+
+    /***************************************************************************
+
+        Constructor
+
+    ***************************************************************************/
+
+    public this ( TestedApplicationBase app )
+    {
+        this.app = app;
+        super(&this.nextSignal);
+    }
+
+    /***************************************************************************
+
+        Resets both timer event and signal number
+
+    ***************************************************************************/
+
+    override public typeof(TimerEvent.reset()) reset ( )
+    {
+        this.signal_id = 0;
+        return super.reset();
+    }
+
+    /***************************************************************************
+
+        Called by timer event when app shutdown process has been started,
+        attempts new kind of signal each time event repeats.
+
+        Returns:
+            'true' if timer event needs to stay registered,
+            'false' otherwise
+
+    ***************************************************************************/
+
+    private bool nextSignal ( )
+    {
+        static signal_order = [ SIGTERM, SIGKILL, SIGABRT ];
+        static signal_names = [ "SIGTERM", "SIGKILL", "SIGABRT" ];
+
+        if (!this.app.isRunning())
+            return false;
+
+        auto i = this.signal_id;
+
+        if (i >= signal_order.length)
+        {
+            .log.error(
+                "Tested application kept running even after SIGABRT");
+            assert(false);
+        }
+
+        log.trace("Sending {} to the tested application (pid {})",
+            signal_names[i], this.app.pid());
+        this.app.process.kill(signal_order[i]);
+        this.signal_id++;
+
+        return true;
     }
 }
