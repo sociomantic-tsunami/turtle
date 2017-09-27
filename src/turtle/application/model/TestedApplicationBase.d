@@ -139,6 +139,7 @@ abstract class TestedApplicationBase
 
     public abstract void start ( Const!(cstring)[] args = null )
     {
+        // disable previous kill timer if present
         this.kill_timer.reset();
         this.process.start(args);
         log.trace("pid {} : '{} {}'",
@@ -181,7 +182,6 @@ abstract class TestedApplicationBase
     {
         return this.process.pid();
     }
-
 
     /***************************************************************************
 

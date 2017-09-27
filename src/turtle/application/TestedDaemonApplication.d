@@ -15,10 +15,14 @@ import core.stdc.stdlib;
 
 import ocean.transition;
 import ocean.task.util.Timer;
+import ocean.task.Scheduler;
+import ocean.io.select.client.TimerEvent;
+import ocean.text.convert.Formatter;
 
 import turtle.runner.Logging;
 import turtle.application.model.TestedApplicationBase;
 import turtle.application.model.ExternalProcess;
+import turtle.application.Stats;
 
 /*******************************************************************************
 
@@ -30,6 +34,15 @@ import turtle.application.model.ExternalProcess;
 
 class TestedDaemonApplication : TestedApplicationBase
 {
+    /***************************************************************************
+
+        Timer instance used to check resource consumption by tested app and
+        record peak stats.
+
+    ***************************************************************************/
+
+    protected StatsGrabber stats_grabber;
+
     /***************************************************************************
 
         As the process is expected to be daemon-like, it will abort the
@@ -96,6 +109,7 @@ class TestedDaemonApplication : TestedApplicationBase
         this.process = new ExternalDaemonProcess(this.executable_path, sandbox,
             args, env);
         this.delay = cast(uint) (delay * 1_000_000);
+        this.stats_grabber = new StatsGrabber(this);
     }
 
     /***************************************************************************
@@ -114,6 +128,9 @@ class TestedDaemonApplication : TestedApplicationBase
         super.start(args);
         if (this.delay > 0)
             .wait(this.delay);
+        // collect stats each 10 milliseconds
+        this.stats_grabber.set(0, 1, 0, 10);
+        theScheduler.epoll.register(this.stats_grabber);
     }
 
     /***************************************************************************
@@ -124,7 +141,83 @@ class TestedDaemonApplication : TestedApplicationBase
 
     override public void stop ( )
     {
+        this.stats_grabber.reset();
         this.expecting_termination = true;
         super.stop();
+    }
+
+    /***************************************************************************
+
+        Returns:
+            stats for peak resource usage by the application
+
+    ***************************************************************************/
+
+    public PeakStats getPeakStats ( )
+    {
+        return this.stats_grabber.peak_stats;
+    }
+}
+
+/*******************************************************************************
+
+    Fires regular triggers to collect tested application memory consumption
+    stats.
+
+*******************************************************************************/
+
+private final class StatsGrabber : TimerEvent
+{
+    import ocean.sys.stats.linux.ProcVFS;
+
+    /// Reference to bound application
+    private TestedApplicationBase app;
+    /// Updated by timer
+    private PeakStats peak_stats;
+
+    /***************************************************************************
+
+        Constructor
+
+    ***************************************************************************/
+
+    public this ( TestedApplicationBase app )
+    {
+        this.app = app;
+        super(&this.checkStats);
+    }
+
+    /***************************************************************************
+
+        Resets both timer event and stored stats
+
+    ***************************************************************************/
+
+    override public typeof(TimerEvent.reset()) reset ( )
+    {
+        this.peak_stats = PeakStats.init;
+        return super.reset();
+    }
+
+    /***************************************************************************
+
+        Called by timer event with a very small interval
+
+    ***************************************************************************/
+
+    private bool checkStats ( )
+    {
+        try
+        {
+            auto stats = getProcStat(format("/proc/{}/stat", this.app.pid()));
+            if (this.peak_stats.vsize < stats.vsize)
+                this.peak_stats.vsize = stats.vsize;
+            return true;
+        }
+        catch (Exception e)
+        {
+            .log.error("{} ({}:{})", getMsg(e), e.file, e.line);
+            return false;
+        }
     }
 }
