@@ -36,6 +36,7 @@ import ocean.task.Scheduler;
 import ocean.task.Task;
 import ocean.task.extensions.ExceptionForwarding;
 import ocean.task.util.Timer;
+import ocean.text.Arguments;
 
 import turtle.TestCase;
 import turtle.Exception;
@@ -49,9 +50,9 @@ import turtle.env.ControlSocket;
 // import aggregator
 struct Actions
 {
-    import turtle.runner.actions.RunAll;
-    import turtle.runner.actions.RunOne;
-    import turtle.runner.actions.List;
+    import turtle.runner.actions.RunAll : runAll;
+    import turtle.runner.actions.RunOne : runOne;
+    import turtle.runner.actions.List : listAllTests;
 }
 
 /*******************************************************************************
