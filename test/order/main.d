@@ -9,7 +9,7 @@ module test.order.main;
 import turtle.runner.Runner;
 import turtle.TestCase;
 
-import ocean.core.Test;
+import OT = ocean.core.Test;
 
 import ocean.transition;
 
@@ -42,8 +42,8 @@ int main ( istring[] args )
     auto runner = new TurtleRunner!(VerifyTestOrder)("",
         "test", "order");
     auto status = runner.main(args);
-    test!("!=")(status, 0);
-    test!("==")(total_tests_run, 3);
+    OT.test!("!=")(status, 0);
+    OT.test!("==")(total_tests_run, 3);
     return 0;
 }
 
@@ -59,7 +59,7 @@ class Test1 : TestCase
     override public void run ( )
     {
         total_tests_run++;
-        test!("==")(total_tests_run, 1);
+        OT.test!("==")(total_tests_run, 1);
     }
 }
 
@@ -75,7 +75,7 @@ class Test2 : TestCase
     override public void run ( )
     {
         total_tests_run++;
-        test!("==")(total_tests_run, 2);
+        OT.test!("==")(total_tests_run, 2);
     }
 }
 
@@ -92,10 +92,10 @@ class Test3_Fatal : TestCase
     override public void run ( )
     {
         total_tests_run++;
-        test!("==")(total_tests_run, 3);
+        OT.test!("==")(total_tests_run, 3);
         // There is no easy way to suppress trace log output for failing
         // test condition so just saying clearly that it can be ignored:
-        test(false, "This condition is expected to fail and won't result " ~
+        OT.test(false, "This condition is expected to fail and won't result " ~
             "in whole test suite failing");
     }
 }
@@ -112,7 +112,7 @@ class Test4_NeverRuns : TestCase
     override public void run ( )
     {
         total_tests_run++;
-        test(false);
+        OT.test(false);
     }
 }
 
@@ -120,6 +120,6 @@ class DisabledTest : TestCase
 {
     override public void run ( )
     {
-        test(false);
+        OT.test(false);
     }
 }

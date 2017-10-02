@@ -50,7 +50,7 @@ class Dummy2 : TestCase
 class Final : TestCase
 {
     import turtle.env.ControlSocket;
-    import ocean.core.Test;
+    import OT = ocean.core.Test;
 
     override public Description description ( )
     {
@@ -63,6 +63,6 @@ class Final : TestCase
     override public void run ( )
     {
         auto response = sendCommand(this, "total");
-        test!("==")(response, "3"); // 2 previous tests + initial reset
+        OT.test!("==")(response, "3"); // 2 previous tests + initial reset
     }
 }
