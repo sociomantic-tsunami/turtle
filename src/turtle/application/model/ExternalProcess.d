@@ -130,7 +130,7 @@ class ExternalProcess : EpollProcess
         foreach (line; splitLines(cast(mstring) data))
         {
             if (line.length)
-                this.process_log.trace("{}", line);
+                this.process_log.trace(line);
         }
     }
 
@@ -148,7 +148,7 @@ class ExternalProcess : EpollProcess
         foreach (line; splitLines(cast(mstring) data))
         {
             if (line.length)
-                this.process_log.error("{}", line);
+                this.process_log.error(line);
         }
     }
 
