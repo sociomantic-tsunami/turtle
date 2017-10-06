@@ -42,6 +42,8 @@ import turtle.Exception;
 import turtle.runner.Context;
 import turtle.runner.Logging;
 import turtle.runner.internal.RunnerConfig;
+import turtle.application.TestedDaemonApplication;
+import turtle.application.TestedCliApplication;
 import turtle.env.Shell;
 import turtle.env.model.Registry;
 import turtle.env.ControlSocket;
@@ -109,9 +111,6 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
         const AutoStartTestedApp = false;
         const SetupSandbox       = false;
     }
-
-    import turtle.application.TestedDaemonApplication;
-    import turtle.application.TestedCliApplication;
 
     /***************************************************************************
 
