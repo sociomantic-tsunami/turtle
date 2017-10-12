@@ -3,6 +3,22 @@
     Convenience helpers for working with unix socket connecting a test suite and
     a tested application.
 
+    Turtle will check if tested application has created file named
+    "turtle.socket" in the sandbox root and try connecting to it if present.
+    Applications implementing "turtle.socket" support must provide handler for
+    at least one command, "reset", which will be sent after each time test
+    runner reset() method is called. The handler must respond with "ACK" string,
+    even if handler implementation is no-op otherwise - this is required so that
+    turtle won't continue with running tests until app is ready.
+
+    Any other arbitrary command handlers can be implemented in the application
+    and triggered via this module.
+
+    NB: it is higlhy recommended to create "turtle.socket" in the tested
+    application only once the application has completed all required start-up
+    logic and is in a testable state. It is planned to eventually use creation
+    of this file as a replacement of current fixed startup wait delay.
+
     Copyright: Copyright (c) 2017 sociomantic labs GmbH. All rights reserved
 
     License: Boost Software License Version 1.0. See LICENSE for details.
