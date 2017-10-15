@@ -66,18 +66,22 @@ package void setupLogging ( )
     log = Log.lookup("turtle");
 }
 
-/*******************************************************************************
-
-    Backwards compatibility workaround for test suites that don't use turtle
-    runner and thus won't have `setupLogging` called normally.
-
-    See https://github.com/sociomantic/turtle/issues/166
-
-*******************************************************************************/
-
-static this ( )
+version (UnitTest) { }
+else
 {
-    setupLogging();
+    /***************************************************************************
+
+        Backwards compatibility workaround for test suites that don't use turtle
+        runner and thus won't have `setupLogging` called normally.
+
+        See https://github.com/sociomantic/turtle/issues/166
+
+    ***************************************************************************/
+
+    static this ( )
+    {
+        setupLogging();
+    }
 }
 
 /*******************************************************************************
