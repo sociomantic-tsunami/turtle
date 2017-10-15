@@ -76,6 +76,8 @@ else
 
         See https://github.com/sociomantic/turtle/issues/166
 
+        Relying on this is deprecated, going to be removed in v9.0.0
+
     ***************************************************************************/
 
     static this ( )
