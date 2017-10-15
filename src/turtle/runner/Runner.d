@@ -53,6 +53,7 @@ import turtle.env.ControlSocket;
 struct Actions
 {
     import turtle.runner.actions.RunAll : runAll;
+    import turtle.runner.actions.RunTwiceCompareStats : runTwiceCompareStats;
     import turtle.runner.actions.RunOne : runOne;
     import turtle.runner.actions.List : listAllTests;
 }
@@ -307,8 +308,17 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
                     &this.resetSync);
             }
 
-            return Actions.runAll(this.config, this.context,
-                &this.resetSync, this.disabledTestCases());
+            if (this.config.memcheck)
+            {
+                return Actions.runTwiceCompareStats(this.config,
+                    this.context, &this.resetSync,
+                    this.disabledTestCases());
+            }
+            else
+            {
+                return Actions.runAll(this.config, this.context,
+                    &this.resetSync, this.disabledTestCases());
+            }
         }
         catch (Exception e)
         {
@@ -636,6 +646,13 @@ class TurtleRunner ( TaskT ) : CliApp
                 "each N seconds");
         args("fatal")
             .help("Treat all test case failures as fatal");
+
+        static if (TaskT.AutoStartTestedApp)
+        {
+            args("memcheck")
+                .help("Runs whole test suite twice, ensuring that memory " ~
+                    "usage does not change for the second run");
+        }
     }
 
     /***************************************************************************
@@ -671,6 +688,9 @@ class TurtleRunner ( TaskT ) : CliApp
 
         if (args.exists("filter"))
             this.task.config.name_filter = args.getString("filter");
+
+        if (args.exists("memcheck"))
+            this.task.config.memcheck = true;
 
         static if (TaskT.SetupSandbox)
         {

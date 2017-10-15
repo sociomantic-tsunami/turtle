@@ -90,4 +90,14 @@ public struct RunnerConfig
     ***************************************************************************/
 
     public bool forced_fatal;
+
+    /***************************************************************************
+
+        If set to true, whole test suite will be run twice without restarting
+        tested application in between and peak memory stats compared between
+        two runs.
+
+    ***************************************************************************/
+
+    public bool memcheck;
 }
