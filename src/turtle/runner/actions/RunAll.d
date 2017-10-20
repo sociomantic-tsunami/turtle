@@ -134,7 +134,7 @@ public bool runAll ( ref Internal.RunnerConfig config, ref Context context,
                 {
                     last_progress_report = Clock.now.span.seconds;
                     Stdout.formatln("Running.. {} tests completed so far",
-                        progress);
+                        progress).flush();
                 }
             }
         }
