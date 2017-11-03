@@ -1,0 +1,63 @@
+version: 2
+
+workflows:
+    version: 2
+    all:
+        jobs:
+        - test-1.081-devel
+        - test-1.081-prod
+        - test-2.070-devel
+        - test-2.070-prod
+        - test-2.071-devel
+        - test-2.071-prod
+
+templates:
+    test: &test-template
+        docker:
+        - image: mihailsstrasunssociomantic/dlang
+          user: testrunner
+        steps:
+        - checkout
+        - run:
+            name: Update submodules
+            command: |
+                git submodule sync
+                git submodule update --init
+        - run:
+            name: Install dependencies
+            command: sudo -E .circleci/deps.sh
+        - run:
+            name: Build & run tests
+            command: .circleci/test.sh
+
+jobs:
+    test-1.081-devel:
+        <<: *test-template
+        environment:
+        - DMD: "1.081.*"
+        - F: "devel"
+    test-1.081-prod:
+        <<: *test-template
+        environment:
+        - DMD: "1.081.*"
+        - F: "production"
+    test-2.070-devel:
+        <<: *test-template
+        environment:
+        - DMD: "2.070.2.s*"
+        - F: "devel"
+    test-2.070-prod:
+        <<: *test-template
+        environment:
+        - DMD: "2.070.2.s*"
+        - F: "production"
+    test-2.071-devel:
+        <<: *test-template
+        environment:
+        - DMD: "2.071.2.s*"
+        - F: "devel"
+    test-2.071-prod:
+        <<: *test-template
+        environment:
+        - DMD: "2.071.2.s*"
+        - F: "production"
