@@ -1,0 +1,11 @@
+version: 2
+
+jobs:
+    dummy:
+        docker:
+            - image: sociomantictsunami/dlang:xenial-v3
+        steps:
+            - checkout
+            - run:
+                name: Update submodules
+                command: git submodule update --in
