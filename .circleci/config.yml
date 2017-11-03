@@ -1,0 +1,17 @@
+version: 2
+
+jobs:
+    build:
+        docker:
+            - image: sociomantictsunami/dlang:xenial-v3
+        steps:
+            - checkout
+            - run:
+                name: User Info
+                command: id
+            - run:
+                name: Update submodules
+                command: git submodule update --init
+            - run:
+                name: Install dependencies
+                command: .circleci/deps.sh
