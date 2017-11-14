@@ -1,17 +1,71 @@
 version: 2
 
+workflows:
+    version: 2
+    all:
+        jobs:
+        - image
+        - test:
+            requires:
+            - image
+
 jobs:
-    build:
+    image:
         docker:
-            - image: sociomantictsunami/dlang:xenial-v3
+        - image: mihailsstrasunssociomantic/circleci
+        environment:
+        - DMD: "1.081.*"
+        - DIST: "xenial"
+        - F: "devel"
         steps:
-            - checkout
-            - run:
-                name: User Info
-                command: id
-            - run:
-                name: Update submodules
-                command: git submodule update --init
-            - run:
-                name: Install dependencies
-                command: .circleci/deps.sh
+        - checkout
+        - setup_remote_docker
+        - run:
+            name: Update submodules
+            command: |
+              git submodule sync
+              git submodule update --init
+        - restore_cache:
+            keys:
+            - v1-{{ .Branch }}
+            paths:
+            - /docker/beaver.tar
+        - run:
+            name: Update Docker image
+            command: |
+              set -u
+              test -f /docker/beaver.tar && docker load -i /docker/beaver.tar
+              .circleci/docker.sh
+              mkdir -p /docker
+              docker save -o /docker/beaver.tar beaver
+        - save_cache:
+            key: v1-{{ .Branch }}
+            paths:
+              - /docker/beaver.tar
+    test:
+        docker:
+        - image: mihailsstrasunssociomantic/circleci
+        environment:
+        - DMD: "1.081.*"
+        - DIST: "xenial"
+        - F: "devel"
+        steps:
+        - checkout
+        - setup_remote_docker
+        - run:
+            name: Update submodules
+            command: |
+              git submodule sync
+              git submodule update --init
+        - restore_cache:
+            keys:
+            - v1-{{ .Branch }}
+            paths:
+            - /docker/beaver.tar
+        - run:
+            name: Prepare Docker image
+            command: |
+              docker load -i /docker/beaver.tar
+        - run:
+            name: Run tests
+            command: .circleci/tests.sh
