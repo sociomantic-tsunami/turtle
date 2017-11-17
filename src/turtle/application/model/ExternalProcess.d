@@ -17,7 +17,6 @@ import core.sys.posix.signal;
 import ocean.transition;
 import ocean.util.log.Logger;
 import ocean.text.Util;
-import ocean.text.convert.Format;
 import ocean.sys.ErrnoException;
 import ocean.io.select.client.EpollProcess;
 import ocean.task.Scheduler;
