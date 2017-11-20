@@ -1,0 +1,16 @@
+comment:
+    layout: "diff"
+
+coverage:
+    status:
+        project:
+            default:
+                enabled: false
+        patch:
+            default:
+                enabled: true
+                target: 50%
+                threshold: 50%
+        changes:
+            default:
+                enabled: false
