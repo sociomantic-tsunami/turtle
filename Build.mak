@@ -7,6 +7,11 @@ ifeq ($(DVER),1)
 override DFLAGS += -v2 -v2=-static-arr-params -v2=-volatile
 endif
 
+# Enable coverage report in CI
+ifdef CI
+COVFLAG:=-cov
+endif
+
 $O/%unittests: override LDFLAGS += -lpcre
 
 # dummy apps used in tests
@@ -36,3 +41,6 @@ run-daemon-example: $B/example-daemon
 
 run-cli-example: $B/example-cli
 	$(call exec, $B/example-cli $(TURTLE_ARGS))
+
+# Enable coverage generation from unittests
+$O/%unittests: override DFLAGS += $(COVFLAG)

@@ -34,6 +34,9 @@ templates:
         - run:
             name: Build & run tests
             command: .circleci/test.sh
+        - run:
+            name: Upload code coverage report
+            command: bash <(curl -s https://codecov.io/bash)
 
 jobs:
     test-1.081-devel:
