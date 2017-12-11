@@ -17,7 +17,7 @@ templates:
     test: &test-template
         docker:
         - image: mihailsstrasunssociomantic/dlang
-          user: testrunner
+          user: cachalot
         steps:
         - checkout
         - run:
