@@ -8,8 +8,11 @@ echo "-- ${DMD} -- "
 # Update package cache
 apt-get update
 
-# Remove pre-installed DMD package to avoid conflicts
-apt-get remove -y dmd-bin
+if [ "`echo $DMD_PKG | grep dmd-compiler`" ]
+then
+    # Remove pre-installed DMD package to avoid conflicts
+    apt-get remove -y dmd-bin
+fi
 
 # Install dependencies
 apt-get install -y \
