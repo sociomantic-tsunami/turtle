@@ -16,7 +16,7 @@ workflows:
 templates:
     test: &test-template
         docker:
-        - image: mihailsstrasunssociomantic/dlang
+        - image: sociomantictsunami/dlang:xenial-v3
           user: cachalot
         steps:
         - checkout
