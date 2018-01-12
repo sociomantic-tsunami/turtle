@@ -19,6 +19,9 @@ templates:
         - image: sociomantictsunami/dlang:xenial-v3.1.0
           user: cachalot
         steps:
+        - run:
+            name: Install ssh client
+            command: sudo apt update && sudo apt -y install openssh-client
         - checkout
         - run:
             name: Update submodules
