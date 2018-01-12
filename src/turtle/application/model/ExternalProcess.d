@@ -20,7 +20,6 @@ import ocean.text.Util;
 import ocean.sys.ErrnoException;
 import ocean.io.select.client.EpollProcess;
 import ocean.task.Scheduler;
-import ocean.core.Traits;
 
 import turtle.runner.Logging;
 
@@ -151,57 +150,22 @@ class ExternalProcess : EpollProcess
         }
     }
 
-    // For forwards compatibility with Ocean v1.31, where an overload of
-    // EpollProcess.start with one argument has been added, we need to adapt
-    // the API of this class in Turtle. This is to fix the following problem
-    // when the user calls `start` with one argument:
-    //
-    // 1) D2 favours `EpollProcess.start` with exactly one argument as the
-    //    best match. It requires the user to explicitly alias this method in the
-    //    derived class.
-    //
-    // 2) D1 cannot automatically decide between the version
-    //    with one argument, and the version with one argument + a default
-    //    argument.
-    static if (hasMethod!(EpollProcess, "start",
-                void delegate (Const!(mstring)[])))
+    /***********************************************************************
+
+        Start binary in sandbox and leave it running until `stop`
+        is called
+
+        Params:
+            extra_args = additional arguments to append to ones defined in
+                constructor when starting the process
+
+    ***********************************************************************/
+
+    public override void start ( Const!(mstring)[] extra_args = null )
     {
-        /***********************************************************************
-
-            Start binary in sandbox and leave it running until `stop`
-            is called
-
-            Params:
-                extra_args = additional arguments to append to ones defined in
-                    constructor when starting the process
-
-        ***********************************************************************/
-
-        public override void start ( Const!(mstring)[] extra_args = null )
-        {
-            this.startImpl(extra_args);
-        }
+        this.startImpl(extra_args);
     }
-    else
-    {
-        /***********************************************************************
 
-            Start binary in sandbox and leave it running until `stop`
-            is called
-
-            Params:
-                extra_args = additional arguments to append to ones defined in
-                    constructor when starting the process
-                monitor = unused, for API compatibility with EpollProcess
-
-        ***********************************************************************/
-
-        public override void start ( Const!(mstring)[] extra_args = null,
-                ProcessMonitor monitor = null )
-        {
-            this.startImpl(extra_args);
-        }
-    }
 
     /***************************************************************************
 
@@ -262,20 +226,7 @@ class ExternalProcess : EpollProcess
     protected void startImpl ( Const!(mstring)[] extra_args )
     {
         this.process.setWorkDir(this.work_dir.dup);
-
-        // For forwards compatibility with Ocean 1.31 we cannot call
-        // EpollProcess.start which accepts two arguments. This is to avoid the
-        // deprecated method from recursively calling ExternalProcess.start.
-
-        static if (hasMethod!(EpollProcess, "start",
-                    void delegate (Const!(mstring)[])))
-        {
-            super.start(command ~ this.arguments ~ extra_args);
-        }
-        else
-        {
-            super.start(command ~ this.arguments ~ extra_args, null);
-        }
+        super.start(command ~ this.arguments ~ extra_args);
     }
 
 }
