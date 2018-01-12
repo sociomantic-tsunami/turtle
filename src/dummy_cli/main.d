@@ -8,8 +8,11 @@
 
 *******************************************************************************/
 
+module dummy_cli.main;
+
 import ocean.io.Stdout;
 
+version (UnitTest) {} else
 void main ( )
 {
     Stdout.formatln("{}", "Hello, World!");
