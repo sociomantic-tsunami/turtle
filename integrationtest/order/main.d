@@ -1,4 +1,4 @@
-module test.order.main;
+module integrationtest.order.main;
 
 /*******************************************************************************
 
@@ -37,6 +37,7 @@ class VerifyTestOrder : TurtleRunnerTask!(TestedAppKind.None)
 
 long total_tests_run;
 
+version (UnitTest) {} else
 int main ( istring[] args )
 {
     auto runner = new TurtleRunner!(VerifyTestOrder)("",
