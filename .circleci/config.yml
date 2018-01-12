@@ -10,8 +10,8 @@ workflows:
         - test-2.070-prod
         - test-2.071-devel
         - test-2.071-prod
-        - test-2.077-upstream-devel
-        - test-2.077-upstream-prod
+        - test-2.078-upstream-devel
+        - test-2.078-upstream-prod
 
 templates:
     test: &test-template
@@ -66,13 +66,13 @@ jobs:
         environment:
         - DMD: "2.071.2.s*"
         - F: "production"
-    test-2.077-upstream-devel:
+    test-2.078-upstream-devel:
         <<: *test-template
         environment:
-        - DMD: "2.077.*"
+        - DMD: "2.078.*"
         - F: "devel"
-    test-2.077-upstream-prod:
+    test-2.078-upstream-prod:
         <<: *test-template
         environment:
-        - DMD: "2.077.*"
+        - DMD: "2.078.*"
         - F: "production"
