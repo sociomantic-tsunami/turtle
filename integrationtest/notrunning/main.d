@@ -8,7 +8,7 @@
 
 *******************************************************************************/
 
-module test.notrunning.main;
+module integrationtest.notrunning.main;
 
 import ocean.transition;
 
@@ -24,6 +24,7 @@ class TestedAppNotRunning : TurtleRunnerTask!(TestedAppKind.CLI)
     override public void reset ( ) { }
 }
 
+version (UnitTest) {} else
 int main ( istring[] args )
 {
     auto runner = new TurtleRunner!(TestedAppNotRunning)("dummy_cli", "");
