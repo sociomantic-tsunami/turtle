@@ -5,11 +5,14 @@
 
 *******************************************************************************/
 
+module integrationtest.controlsocket.main;
+
 import ocean.transition;
 
 import turtle.runner.Runner;
 import turtle.TestCase;
 
+version (UnitTest) {} else
 int main ( istring[] args )
 {
     auto runner = new TurtleRunner!(MyTurtleTests)("dummy_daemon", "",

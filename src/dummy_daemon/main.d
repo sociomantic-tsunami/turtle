@@ -11,11 +11,14 @@
 
 *******************************************************************************/
 
+module dummy_daemon.main;
+
 import ocean.transition;
 import ocean.io.select.EpollSelectDispatcher;
 import ocean.net.server.unix.UnixListener;
 import ocean.text.convert.Formatter;
 
+version (UnitTest) {} else
 void main ( )
 {
     auto epoll = new EpollSelectDispatcher;
