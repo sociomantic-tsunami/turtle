@@ -37,6 +37,9 @@ import ocean.task.extensions.ExceptionForwarding;
 import ocean.task.util.Timer;
 import ocean.text.Arguments;
 import ocean.util.log.Logger;
+import ocean.text.convert.Formatter;
+import ocean.text.util.StringC;
+import ocean.stdc.posix.stdlib  : mkdtemp;
 
 import turtle.TestCase;
 import turtle.Exception;
@@ -342,9 +345,31 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
     {
         // recreate folder layout and change working directory
 
-        auto sandbox = this.context.paths.sandbox;
-        shell("rm -rf " ~ sandbox);
-        shell("mkdir " ~ sandbox);
+        auto path = this.context.paths.tmp_dir;
+        cstring sandbox;
+
+        if (this.config.name.length == 0)
+        {
+            auto generated = mkdtemp(format(
+                "{}/sandbox-{}-XXXXXXXX\0",
+                path,
+                this.context.binary
+            ).dup.ptr);
+            enforce!(TurtleException)(generated !is null);
+            auto sandbox_path = FilePath(StringC.toDString(generated));
+            this.config.name = idup(sandbox_path.file());
+            sandbox = sandbox_path.toString() ~ "/";
+            this.context.paths.sandbox = idup(sandbox);
+            .log.trace("Created dir '{}' via mkdtemp", sandbox);
+        }
+        else
+        {
+            // remove when removing deprecated Runner constructor
+            sandbox = this.context.paths.sandbox;
+            shell("rm -rf " ~ sandbox);
+            shell("mkdir " ~ sandbox);
+        }
+
         cwd(sandbox);
         shell("mkdir ./bin");
         shell("mkdir ./etc");
@@ -371,8 +396,7 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
                 shell("mkdir -p " ~ dst);
         }
 
-        log.info("Temporary sandbox created at '{}'",
-            this.context.paths.sandbox);
+        log.info("Temporary sandbox created at '{}'", sandbox);
     }
 
     /***************************************************************************
@@ -550,27 +574,29 @@ class TurtleRunner ( TaskT ) : CliApp
             binary = name of tested binary (to be found in `this.bin_dir`)
             test_package = prefix for the module name(s) to look into for
                 test case classes. If empty, no filter is used.
-            name = this test suite name, used as suffix for a sandbox. Defaults
-                to name of the binary (first argument)
 
     ***************************************************************************/
 
-    public this ( istring binary, istring test_package = "", istring name = "" )
+    public this ( istring binary, istring test_package = "" )
     {
         .setupLogging();
 
-        if (name.length == 0)
-            name = binary;
-        auto desc = "External functional test suite for " ~ name;
-        super(name, desc, v_info);
+        auto desc = "External functional test suite for " ~ binary;
+        super("turtle", desc, v_info);
 
         this.task = new TaskT();
 
         this.task.config.test_package = test_package;
-        this.task.config.name = name;
 
         this.task.context.binary = binary;
         this.task.context.app = null;
+    }
+
+    deprecated("Use implicit random test suite name to prevent accidental clashes")
+    public this ( istring binary, istring test_package, istring name )
+    {
+        this(binary, test_package);
+        this.task.config.name = name;
     }
 
     /***************************************************************************
@@ -733,8 +759,12 @@ class TurtleRunner ( TaskT ) : CliApp
                     "File '" ~ paths.binary ~ "' not found");
             }
 
-            this.task.context.paths.sandbox = this.task.context.paths.tmp_dir
-                ~ "/sandbox-" ~ this.name() ~ "/";
+            // Remove when removing deprecated Runner constructor
+            if (this.task.config.name.length > 0)
+            {
+                this.task.context.paths.sandbox = path
+                    ~ "/sandbox-" ~ this.task.config.name ~ "/";
+            }
 
             log.info("Testing '{}'", this.task.context.paths.binary);
         }

@@ -26,8 +26,7 @@ class TestedAppNotRunning : TurtleRunnerTask!(TestedAppKind.CLI)
 
 int main ( istring[] args )
 {
-    auto runner = new TurtleRunner!(TestedAppNotRunning)("dummy_cli", "test",
-        "notrunning");
+    auto runner = new TurtleRunner!(TestedAppNotRunning)("dummy_cli", "");
     return runner.main(args);
 }
 

@@ -39,8 +39,7 @@ long total_tests_run;
 
 int main ( istring[] args )
 {
-    auto runner = new TurtleRunner!(VerifyTestOrder)("",
-        "test", "order");
+    auto runner = new TurtleRunner!(VerifyTestOrder)("", "");
     auto status = runner.main(args);
     OT.test!("!=")(status, 0);
     OT.test!("==")(total_tests_run, 3);

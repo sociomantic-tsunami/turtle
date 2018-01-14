@@ -12,8 +12,7 @@ import turtle.TestCase;
 
 int main ( istring[] args )
 {
-    auto runner = new TurtleRunner!(MyTurtleTests)("dummy_daemon", "",
-        "controlsocket");
+    auto runner = new TurtleRunner!(MyTurtleTests)("dummy_daemon", "");
     return runner.main(args);
 }
 
