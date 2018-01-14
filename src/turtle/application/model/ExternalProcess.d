@@ -74,6 +74,14 @@ class ExternalProcess : EpollProcess
 
     /***************************************************************************
 
+        Stores last output lines from the external process
+
+    ***************************************************************************/
+
+    protected cstring[100] last_output;
+
+    /***************************************************************************
+
         Constructor
 
         Params:
@@ -129,7 +137,10 @@ class ExternalProcess : EpollProcess
         foreach (line; splitLines(cast(mstring) data))
         {
             if (line.length)
+            {
+                this.rotateOutputLines(line);
                 this.process_log.trace(line);
+            }
         }
     }
 
@@ -147,7 +158,10 @@ class ExternalProcess : EpollProcess
         foreach (line; splitLines(cast(mstring) data))
         {
             if (line.length)
+            {
+                this.rotateOutputLines(line);
                 this.process_log.error(line);
+            }
         }
     }
 
@@ -278,4 +292,17 @@ class ExternalProcess : EpollProcess
         }
     }
 
+    /***************************************************************************
+
+        Appends to the front of `this.last_output` buffer, shifting existing
+        elements towards its end (but never resizing).
+
+    ***************************************************************************/
+
+    private void rotateOutputLines ( cstring line )
+    {
+        for (ptrdiff_t i = this.last_output.length-1; i > 0; --i)
+            this.last_output[i-1] = this.last_output[i];
+        this.last_output[$-1] = line;
+    }
 }
