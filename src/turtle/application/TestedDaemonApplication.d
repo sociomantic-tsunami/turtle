@@ -18,6 +18,8 @@ import ocean.task.util.Timer;
 import ocean.task.Scheduler;
 import ocean.io.select.client.TimerEvent;
 import ocean.text.convert.Formatter;
+import ocean.text.Util;
+import ocean.util.log.Logger;
 
 import turtle.runner.Logging;
 import turtle.application.model.TestedApplicationBase;
@@ -62,8 +64,22 @@ class TestedDaemonApplication : TestedApplicationBase
         {
             if ( !this.outer.expecting_termination )
             {
-                .log.error("Early termination from '{}', aborting",
-                    this.process.programName());
+                .log.error(
+                    "Early termination from '{}', aborting.",
+                    join(this.process.args, " ")
+                );
+
+                if (Log.root.level < Level.Trace)
+                {
+                    .log.error("Last console output:");
+
+                    foreach (line; this.last_output[])
+                    {
+                        if (line.length)
+                            .log.error(line);
+                    }
+                }
+
                 abort();
             }
         }
