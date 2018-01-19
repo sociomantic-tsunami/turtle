@@ -16,12 +16,9 @@ workflows:
 templates:
     test: &test-template
         docker:
-        - image: sociomantictsunami/dlang:xenial-v3.1.0
+        - image: sociomantictsunami/dlang:xenial-v3.2.0-rc.1
           user: cachalot
         steps:
-        - run:
-            name: Install ssh client
-            command: sudo apt update && sudo apt -y install openssh-client
         - checkout
         - run:
             name: Update submodules
