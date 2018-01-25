@@ -1,10 +1,12 @@
 version: 2
 
 templates:
-    test: &test-template
+    image: &default-docker-image
         docker:
         - image: sociomantictsunami/dlang:xenial-v3
           user: cachalot
+    test: &test-template
+        <<: *default-docker-image
         steps:
         - checkout
         - run:
@@ -97,9 +99,7 @@ jobs:
         - DMD: "2.077.*"
         - F: "production"
     d2tag:
-        docker:
-        - image: sociomantictsunami/dlang:xenial-v3
-          user: cachalot
+        <<: *default-docker-image
         steps:
         - checkout
         - run:
