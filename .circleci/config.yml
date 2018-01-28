@@ -32,7 +32,7 @@ workflows:
 templates:
     test: &test-template
         docker:
-        - image: sociomantictsunami/dlang:xenial-v3.2.0-rc.1
+        - image: sociomantictsunami/dlang:xenial-v3
           user: cachalot
         steps:
         - checkout
