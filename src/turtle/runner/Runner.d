@@ -762,6 +762,7 @@ class TurtleRunner ( TaskT ) : CliApp
             // Remove when removing deprecated Runner constructor
             if (this.task.config.name.length > 0)
             {
+                path = this.task.context.paths.tmp_dir;
                 this.task.context.paths.sandbox = path
                     ~ "/sandbox-" ~ this.task.config.name ~ "/";
             }
