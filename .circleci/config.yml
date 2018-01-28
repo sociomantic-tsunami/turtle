@@ -12,6 +12,22 @@ workflows:
         - test-2.071-prod
         - test-2.077-upstream-devel
         - test-2.077-upstream-prod
+        - d2tag:
+            context: org-global
+            requires:
+            - test-1.081-devel
+            - test-1.081-prod
+            - test-2.070-devel
+            - test-2.070-prod
+            - test-2.071-devel
+            - test-2.071-prod
+            - test-2.077-upstream-devel
+            - test-2.077-upstream-prod
+            filters:
+                tags:
+                    ignore: /.*\+d2$/
+                branches:
+                    ignore: /.*/
 
 templates:
     test: &test-template
@@ -76,3 +92,16 @@ jobs:
         environment:
         - DMD: "2.077.*"
         - F: "production"
+    d2tag:
+        docker:
+        - image: sociomantictsunami/dlang:xenial-v3
+          user: cachalot
+        steps:
+        - checkout
+        - run:
+            name: Update submodules
+            command: |
+                git submodule sync
+                git submodule update --init
+        - run: make d2conv
+        - run: .circleci/d2tag.sh
