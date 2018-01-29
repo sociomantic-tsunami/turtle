@@ -104,10 +104,8 @@ int main ( istring[] args )
 {
     auto name = "example"[];
     auto test_package = "example.daemon"[];
-    auto sandbox_folder = "example-daemon"[];
 
-    auto runner = new TurtleRunner!(MyTurtleRunnerTask)(name, test_package,
-        sandbox_folder);
+    auto runner = new TurtleRunner!(MyTurtleRunnerTask)(name, test_package);
     return runner.main(args);
 }
 

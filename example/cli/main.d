@@ -66,10 +66,8 @@ int main ( istring[] args )
 {
     auto name = "example"[];
     auto test_package = "example.cli"[];
-    auto sandbox_folder = "example-cli"[];
 
-    auto runner = new TurtleRunner!(MyTurtleRunnerTask)(name, test_package,
-        sandbox_folder);
+    auto runner = new TurtleRunner!(MyTurtleRunnerTask)(name, test_package);
     return runner.main(args);
 }
 
