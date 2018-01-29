@@ -73,16 +73,6 @@ abstract class TestedApplicationBase
 
     /***************************************************************************
 
-        Configures wait time after spawning external process before returning
-        control back to the test suite.
-
-    ***************************************************************************/
-
-    deprecated("Ingored by turtle, use TestedApplicationDaemon.delay instead")
-    public double start_wait_delay = 0.0;
-
-    /***************************************************************************
-
         Configures wait time after sending one of kill signals to external
         process before trying a "harder" signal.
 

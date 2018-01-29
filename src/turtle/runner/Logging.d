@@ -66,26 +66,6 @@ package void setupLogging ( )
     log = Log.lookup("turtle");
 }
 
-version (UnitTest) { }
-else
-{
-    /***************************************************************************
-
-        Backwards compatibility workaround for test suites that don't use turtle
-        runner and thus won't have `setupLogging` called normally.
-
-        See https://github.com/sociomantic/turtle/issues/166
-
-        Relying on this is deprecated, going to be removed in v9.0.0
-
-    ***************************************************************************/
-
-    static this ( )
-    {
-        setupLogging();
-    }
-}
-
 /*******************************************************************************
 
     Simple logging layout that simply prints message omitting all extra info

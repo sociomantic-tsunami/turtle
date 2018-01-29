@@ -348,7 +348,8 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
         auto path = this.context.paths.tmp_dir;
         cstring sandbox;
 
-        if (this.config.name.length == 0)
+        enforce!(TurtleException)(this.config.name.length == 0);
+
         {
             auto generated = mkdtemp(format(
                 "{}/sandbox-{}-XXXXXXXX\0",
@@ -361,13 +362,6 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
             sandbox = sandbox_path.toString() ~ "/";
             this.context.paths.sandbox = idup(sandbox);
             .log.trace("Created dir '{}' via mkdtemp", sandbox);
-        }
-        else
-        {
-            // remove when removing deprecated Runner constructor
-            sandbox = this.context.paths.sandbox;
-            shell("rm -rf " ~ sandbox);
-            shell("mkdir " ~ sandbox);
         }
 
         cwd(sandbox);
@@ -592,13 +586,6 @@ class TurtleRunner ( TaskT ) : CliApp
         this.task.context.app = null;
     }
 
-    deprecated("Use implicit random test suite name to prevent accidental clashes")
-    public this ( istring binary, istring test_package, istring name )
-    {
-        this(binary, test_package);
-        this.task.config.name = name;
-    }
-
     /***************************************************************************
 
         Starts the application. Should never be touched.
@@ -757,14 +744,6 @@ class TurtleRunner ( TaskT ) : CliApp
                 paths.binary = paths.bin_dir ~ "/" ~ this.task.context.binary;
                 enforce!(TurtleException)(FilePath(paths.binary).exists,
                     "File '" ~ paths.binary ~ "' not found");
-            }
-
-            // Remove when removing deprecated Runner constructor
-            if (this.task.config.name.length > 0)
-            {
-                path = this.task.context.paths.tmp_dir;
-                this.task.context.paths.sandbox = path
-                    ~ "/sandbox-" ~ this.task.config.name ~ "/";
             }
 
             log.info("Testing '{}'", this.task.context.paths.binary);
