@@ -50,7 +50,8 @@ public struct ShellResult
 
 public ShellResult shell ( cstring cmd, bool validate = true )
 {
-    log.trace("$ {}", cmd);
+    if (log !is null)
+        log.trace("$ {}", cmd);
     ShellResult result;
     auto p = new Process(cmd, null);
     p.redirect(Redirect.Output | Redirect.Error);
