@@ -56,7 +56,7 @@ public void decreaseLogIndent ( )
 
 *******************************************************************************/
 
-package void setupLogging ( )
+public void setupLogging ( )
 {
     Log.root.clear();
     auto appender = new AppendConsole;
