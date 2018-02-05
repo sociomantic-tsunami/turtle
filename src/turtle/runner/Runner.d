@@ -601,6 +601,10 @@ class TurtleRunner ( TaskT ) : CliApp
     {
         SchedulerConfiguration config;
         initScheduler(config);
+        // clear exception handler to workaround regression caused by ocean
+        // v3.6.0 and later which causes test suite to abort during termination
+        // of the tested app because of unhandled exception:
+        theScheduler.exception_handler = null;
         theScheduler.schedule(this.task);
         theScheduler.eventLoop();
         return this.task.ok ? 0 : -1;
