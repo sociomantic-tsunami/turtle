@@ -49,8 +49,8 @@ workflows:
             - test-2.070-prod
             - test-2.071-devel
             - test-2.071-prod
-            - test-2.077-upstream-devel
-            - test-2.077-upstream-prod
+            - test-2.078-upstream-devel
+            - test-2.078-upstream-prod
             filters:
                 tags:
                     ignore: /.*\+d2$/
