@@ -180,6 +180,7 @@ public final class DefaultTestRunner
             .log.error("FAIL at {}:{}", e.file, e.line);
             increaseLogIndent();
             .log.error("({})", getMsg(e));
+            .log.error("Sandbox path was '{}'", context.paths.sandbox);
             decreaseLogIndent();
 
             if (desc.fatal)
