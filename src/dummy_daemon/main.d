@@ -22,14 +22,14 @@ void main ( )
 
     int reset_counter;
 
-    void reset_handler ( cstring args, void delegate ( cstring
+    void reset_handler ( cstring args, scope void delegate ( cstring
         response ) send_response )
     {
         ++reset_counter;
         send_response("ACK");
     }
 
-    void count_handler ( cstring args, void delegate ( cstring
+    void count_handler ( cstring args, scope void delegate ( cstring
         response ) send_response )
     {
         send_response(format("{}", reset_counter));

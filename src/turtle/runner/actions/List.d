@@ -102,13 +102,13 @@ public struct ListOrderIterator
 
     ***************************************************************************/
 
-    int opApply ( int delegate (ref size_t nesting, ref size_t index,
+    int opApply ( scope int delegate (ref size_t nesting, ref size_t index,
         ref TestCase test) dg )
     {
         size_t nesting = 0;
         size_t i = 0;
 
-        auto iterator = Internal.TestCaseIterator(this.tests);
+        auto iterator = Internal.TestCaseIterator((&this).tests);
 
         iterator.nesting_hook = (bool enters) {
             if (enters)
