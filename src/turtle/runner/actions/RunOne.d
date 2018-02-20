@@ -41,7 +41,7 @@ private struct Internal
 *******************************************************************************/
 
 public bool runOne ( ref Internal.RunnerConfig config, ref Context context,
-    void delegate() reset )
+    scope void delegate() reset )
 {
     .log.info("Running only test case with ID {}", config.test_id);
 
