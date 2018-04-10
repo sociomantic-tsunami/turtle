@@ -1,0 +1,4 @@
+job:
+    image: sociomantictsunami/base
+    script:
+        - echo "Works"
