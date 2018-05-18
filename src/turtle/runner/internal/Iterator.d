@@ -107,37 +107,37 @@ public struct TestCaseIterator
 
     ***************************************************************************/
 
-    public int opApply ( int delegate(ref TestCase) dg )
+    public int opApply ( scope int delegate(ref TestCase) dg )
     {
-        foreach ( test_case; this.test_cases )
+        foreach ( test_case; (&this).test_cases )
         {
-            if (this.prepare_hook !is null)
-                this.prepare_hook(test_case);
+            if ((&this).prepare_hook !is null)
+                (&this).prepare_hook(test_case);
 
             auto multi = cast(MultiTestCase) test_case;
             if (multi !is null)
             {
-                if (this.nesting_hook !is null)
-                    this.nesting_hook(true);
+                if ((&this).nesting_hook !is null)
+                    (&this).nesting_hook(true);
 
                 auto status = TestCaseIterator(
                     multi.getNestedCases(),
-                    this.reset_hook,
-                    this.prepare_hook,
-                    this.nesting_hook
+                    (&this).reset_hook,
+                    (&this).prepare_hook,
+                    (&this).nesting_hook
                 ).opApply(dg);
 
                 if (status)
                     return status;
 
-                if (this.nesting_hook !is null)
-                    this.nesting_hook(false);
+                if ((&this).nesting_hook !is null)
+                    (&this).nesting_hook(false);
             }
 
             auto status = dg(test_case);
 
-            if (this.reset_hook !is null)
-                this.reset_hook(test_case);
+            if ((&this).reset_hook !is null)
+                (&this).reset_hook(test_case);
 
             if (status)
                 return status;
