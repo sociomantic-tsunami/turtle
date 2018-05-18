@@ -103,7 +103,7 @@ private class SimpleLayout : Appender.Layout
         assert (SimpleLayout.indent_count >= 0);
     }
 
-    override void format (LogEvent event, size_t delegate(Const!(void)[]) dg)
+    override void format (LogEvent event, scope size_t delegate(Const!(void)[]) dg)
     {
         static mstring buffer;
         sformat(buffer, "[{0,-10}] ", event.name);
