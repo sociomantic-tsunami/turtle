@@ -441,12 +441,13 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
 
         /***********************************************************************
 
-            Starts './bin/<this.context.binary>' as an external process with arguments
-            provided by `this.configureTestedApplication`
+            Initializes `this.context.app` to run './bin/<this.context.binary>'
+            as an external process with arguments provided by
+            `this.configureTestedApplication`
 
         ***********************************************************************/
 
-        private void startTestedApplication ( )
+        private void createTestedApplication ( )
         {
             double delay;
             istring[] iargs;
@@ -471,16 +472,6 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
                 args,
                 env
             );
-
-            static if (Kind == TestedAppKind.Daemon)
-            {
-                this.context.app.start();
-                log.trace("Tested application started.");
-            }
-            else
-            {
-                // CLI app will be started from test cases
-            }
         }
     }
 
@@ -500,13 +491,19 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
             this.createSandbox();
         }
 
+        static if (AutoStartTestedApp)
+        {
+            this.createTestedApplication();
+        }
+
         // user hook for starting services / processes
         this.prepare();
 
-        static if (AutoStartTestedApp)
+        static if (AutoStartTestedApp && Kind == TestedAppKind.Daemon)
         {
-            // binary to test
-            this.startTestedApplication();
+            // TestedAppKind.CLI is started manually in test cases
+            this.context.app.start();
+            log.trace("Tested application started.");
         }
 
         // try connecting to unix socket at path `pwd`/turtle.socket in case
