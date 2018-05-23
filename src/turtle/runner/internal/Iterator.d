@@ -193,8 +193,9 @@ public TestCase[] findTestCases(istring test_package)
                 if (test_case is null)
                 {
                     .log.error(
-                        "Found an invalid test case class '{}' which doesn't " ~
-                            "have the default constructor defined.",
+                        "Found an invalid test case class '{}' which either " ~
+                        "doesn't have the default constructor defined or is " ~
+                        "an abstract class",
                         cinfo.name
                     );
                     .increaseLogIndent();
