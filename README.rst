@@ -20,10 +20,10 @@ Maintained Major Branches
 ====== ==================== ===============
 Major  Initial release date Supported until
 ====== ==================== ===============
-v8.x.x v8.0.0_: 18/06/2017  TBD
+v9.x.x v9.0.0_: 29/01/2018  TBD
 ====== ==================== ===============
 
-.. _v8.0.0: https://github.com/sociomantic-tsunami/turtle/releases/tag/v8.0.0
+.. _v9.0.0: https://github.com/sociomantic-tsunami/turtle/releases/tag/v9.0.0
 
 Description
 ===========
