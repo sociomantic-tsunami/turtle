@@ -326,7 +326,7 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
         catch (Exception e)
         {
             log.fatal("Unexpected failure in test runner!");
-            log.fatal("{}: {} ({}:{})", e.classinfo.name, getMsg(e), e.file, e.line);
+            log.fatal("{}: {} ({}:{})", e.classinfo.name, e.message(), e.file, e.line);
             return false;
         }
     }
