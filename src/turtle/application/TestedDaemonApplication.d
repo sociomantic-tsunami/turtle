@@ -232,7 +232,7 @@ private final class StatsGrabber : TimerEvent
         }
         catch (Exception e)
         {
-            .log.error("{} ({}:{})", getMsg(e), e.file, e.line);
+            .log.error("{} ({}:{})", e.message(), e.file, e.line);
             return false;
         }
     }
