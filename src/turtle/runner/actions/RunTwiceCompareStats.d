@@ -35,7 +35,7 @@ import turtle.runner.Logging;
 *******************************************************************************/
 
 public bool runTwiceCompareStats ( ref RunnerConfig config,
-    ref Context context, void delegate() reset, istring[] disabled )
+    ref Context context, scope void delegate() reset, istring[] disabled )
 {
     // run twice and compare peak stats
     auto app = cast(TestedDaemonApplication) context.app;
