@@ -8,7 +8,7 @@
     NB: this kind only exists to support rare and discouraged use cases and may
     be deprecated in the future.
 
-    Copyright: Copyright (c) 2015-2017 sociomantic labs GmbH. All rights
+    Copyright: Copyright (c) 2015-2017 dunnhumby Germany GmbH. All rights
         reserved.
 
 *******************************************************************************/

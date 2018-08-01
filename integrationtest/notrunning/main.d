@@ -3,7 +3,7 @@
     Tests that turtle doesn't do anything damaging in case tested CLI app was
     never started in tests.
 
-    Copyright: Copyright (c) 2017 sociomantic labs GmbH. All rights
+    Copyright: Copyright (c) 2017 dunnhumby Germany GmbH. All rights
         reserved.
 
 *******************************************************************************/

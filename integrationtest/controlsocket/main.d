@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     Copyright:
-        Copyright (c) 2017 sociomantic Labs GmbH. All rights reserved
+        Copyright (c) 2017 dunnhumby Germany GmbH. All rights reserved
 
 *******************************************************************************/
 

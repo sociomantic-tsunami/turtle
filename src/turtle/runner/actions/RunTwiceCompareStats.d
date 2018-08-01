@@ -2,7 +2,7 @@
 
     Runner action used to check O(1) memory usage
 
-    Copyright: Copyright (c) 2017 sociomantic Labs GmbH. All rights reserved
+    Copyright: Copyright (c) 2017 dunnhumby Germany GmbH. All rights reserved
 
     License: Boost Software License Version 1.0. See LICENSE for details.
 
