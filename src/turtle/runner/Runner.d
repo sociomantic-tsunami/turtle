@@ -3,7 +3,7 @@
     Base task class for test runner and application class to handle
     command-line flags to forward to that test runner.
 
-    Copyright: Copyright (c) 2015-2017 sociomantic labs GmbH. All rights reserved
+    Copyright: Copyright (c) 2015-2017 dunnhumby Germany GmbH. All rights reserved
 
     License: Boost Software License Version 1.0. See LICENSE for details.
 

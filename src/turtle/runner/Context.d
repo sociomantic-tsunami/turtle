@@ -3,7 +3,7 @@
     Part of configuration / test runner context that may be necessary for
     test cases too. It gets passed to each test case during initialization.
 
-    Copyright: Copyright (c) 2015-2017 sociomantic labs GmbH. All rights reserved
+    Copyright: Copyright (c) 2015-2017 dunnhumby Germany GmbH. All rights reserved
 
     License: Boost Software License Version 1.0. See LICENSE for details.
 

@@ -4,7 +4,7 @@
     libraries can register themselves for the purpose of being notified about
     test suite shutdown.
 
-    Copyright: Copyright (c) 2017 sociomantic labs GmbH. All rights reserved.
+    Copyright: Copyright (c) 2017 dunnhumby Germany GmbH. All rights reserved.
 
     License: Boost Software License Version 1.0. See LICENSE for details.
 

@@ -5,7 +5,7 @@
     It only shows concepts specific for `TestedAppKind.CLI`, refer to example of
     `TestedAppKind.Daemon` for generic test case examples.
 
-    Copyright: Copyright (c) 2015-2017 sociomantic labs GmbH. All rights
+    Copyright: Copyright (c) 2015-2017 dunnhumby Germany GmbH. All rights
         reserved.
 
 *******************************************************************************/
