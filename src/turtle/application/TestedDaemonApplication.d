@@ -69,15 +69,12 @@ class TestedDaemonApplication : TestedApplicationBase
                     join(this.process.args, " ")
                 );
 
-                if (Log.root.level < Level.Trace)
-                {
-                    .log.error("Last console output:");
+                .log.error("Last console output:");
 
-                    foreach (line; this.last_output[])
-                    {
-                        if (line.length)
-                            .log.error(line);
-                    }
+                foreach (line; this.last_output[])
+                {
+                    if (line.length)
+                        .log.error(line);
                 }
 
                 abort();
