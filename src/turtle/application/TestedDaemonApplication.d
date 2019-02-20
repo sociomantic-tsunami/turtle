@@ -171,6 +171,7 @@ class TestedDaemonApplication : TestedApplicationBase
 
     public PeakStats getPeakStats ( )
     {
+        this.stats_grabber.update();
         return this.stats_grabber.peak_stats;
     }
 }
@@ -200,7 +201,7 @@ private final class StatsGrabber : TimerEvent
     public this ( TestedApplicationBase app )
     {
         this.app = app;
-        super(&this.checkStats);
+        super(&this.onTimer);
     }
 
     /***************************************************************************
@@ -217,17 +218,28 @@ private final class StatsGrabber : TimerEvent
 
     /***************************************************************************
 
+        Updates peak stats
+
+    ***************************************************************************/
+
+    void update ( )
+    {
+        auto stats = getProcStat(format("/proc/{}/stat", this.app.pid()));
+        if (this.peak_stats.vsize < stats.vsize)
+            this.peak_stats.vsize = stats.vsize;
+    }
+
+    /***************************************************************************
+
         Called by timer event with a very small interval
 
     ***************************************************************************/
 
-    private bool checkStats ( )
+    private bool onTimer ( )
     {
         try
         {
-            auto stats = getProcStat(format("/proc/{}/stat", this.app.pid()));
-            if (this.peak_stats.vsize < stats.vsize)
-                this.peak_stats.vsize = stats.vsize;
+            this.update();
             return true;
         }
         catch (Exception e)
