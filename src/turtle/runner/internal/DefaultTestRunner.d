@@ -91,7 +91,7 @@ public final class DefaultTestRunner
 
     ***************************************************************************/
 
-    this ( TestCase[] tests, Context context, void delegate() reset_dg)
+    this ( TestCase[] tests, Context context, scope void delegate() reset_dg)
     {
         assert(tests.length);
         assert(reset_dg !is null);
