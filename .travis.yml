@@ -34,4 +34,4 @@ jobs:
         - <<: *test-matrix
           env: DMD=2.078.3.s* F=devel
         - <<: *test-matrix
-          env: DMD=2.078.* F=devel
+          env: DMD=2.085.* F=devel
