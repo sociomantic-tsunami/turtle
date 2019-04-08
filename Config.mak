@@ -1,3 +1,2 @@
-ifeq ($(DVER),2)
-override DC := dmd-transitional
-endif
+override DC ?= dmd
+override DVER ?= 2
