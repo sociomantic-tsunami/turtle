@@ -26,24 +26,12 @@ jobs:
     templates:
         - &test-matrix
           stage: Test
-          # Don't build tags already converted to D2
-          if: NOT tag =~ \+d2$
           after_success: beaver dlang codecov
           install: beaver dlang install
           script: beaver dlang make
     include:
         # Test matrix
         - <<: *test-matrix
-          env: DMD=1.082.* F=devel
-        - <<: *test-matrix
           env: DMD=2.078.3.s* F=devel
         - <<: *test-matrix
           env: DMD=2.078.* F=devel
-
-        # Additional stages
-
-        - stage: D2 Release
-          if: tag IS present AND NOT tag =~ \+d2$
-          env: DMD=2.078.3.s* F=devel
-          install: beaver dlang install
-          script: beaver dlang d2-release
