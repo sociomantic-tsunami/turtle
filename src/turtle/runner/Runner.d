@@ -508,7 +508,7 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
 
         // try connecting to unix socket at path `pwd`/turtle.socket in case
         // it was created by tested app
-        auto socket_path = Environment.toAbsolute("turtle.socket".dup);
+        auto socket_path = "turtle.socket";
         if (FilePath(socket_path).exists())
         {
             .log.trace("Found {}, connecting", socket_path);
