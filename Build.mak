@@ -3,10 +3,6 @@ export ALLOW_STOMPING_PREVENTION=0
 override LDFLAGS += -lebtree -llzo2 -lrt -lpcre -lgcrypt -lgpg-error -lglib-2.0
 override DFLAGS  += -w
 
-ifeq ($(DVER),1)
-override DFLAGS += -v2 -v2=-static-arr-params -v2=-volatile
-endif
-
 # Enable coverage report in CI
 ifdef CI
 COVFLAG:=-cov
