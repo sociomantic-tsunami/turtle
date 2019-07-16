@@ -98,23 +98,23 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
 {
     static if (Kind == TestedAppKind.Daemon)
     {
-        const AutoStartTestedApp = true;
-        const SetupSandbox       = true;
+        static immutable AutoStartTestedApp = true;
+        static immutable SetupSandbox       = true;
     }
     else static if (Kind == TestedAppKind.CLI)
     {
-        const AutoStartTestedApp = true;
-        const SetupSandbox       = true;
+        static immutable AutoStartTestedApp = true;
+        static immutable SetupSandbox       = true;
     }
     else static if (Kind == TestedAppKind.Manual)
     {
-        const AutoStartTestedApp = false;
-        const SetupSandbox       = true;
+        static immutable AutoStartTestedApp = false;
+        static immutable SetupSandbox       = true;
     }
     else static if (Kind == TestedAppKind.None)
     {
-        const AutoStartTestedApp = false;
-        const SetupSandbox       = false;
+        static immutable AutoStartTestedApp = false;
+        static immutable SetupSandbox       = false;
     }
 
     /***************************************************************************
