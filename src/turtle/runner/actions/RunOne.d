@@ -22,9 +22,9 @@ import turtle.runner.actions.List : ListOrderIterator;
 // import aggregator
 private struct Internal
 {
-    import turtle.runner.internal.Iterator : findTestCases;
-    import turtle.runner.internal.DefaultTestRunner;
-    import turtle.runner.internal.RunnerConfig;
+    public import turtle.runner.internal.Iterator : findTestCases;
+    public import turtle.runner.internal.DefaultTestRunner;
+    public import turtle.runner.internal.RunnerConfig;
 }
 
 /*******************************************************************************

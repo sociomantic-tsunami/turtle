@@ -21,8 +21,9 @@ import turtle.runner.Context;
 // import aggregator
 private struct Internal
 {
-    import turtle.runner.internal.Iterator : findTestCases, TestCaseIterator;
-    import turtle.runner.internal.RunnerConfig;
+    public import turtle.runner.internal.Iterator : findTestCases,
+        TestCaseIterator;
+    public import turtle.runner.internal.RunnerConfig;
 }
 
 /*******************************************************************************
