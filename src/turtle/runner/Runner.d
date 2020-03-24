@@ -19,10 +19,10 @@ else
     alias versionInfo v_info;
 
 import core.thread;
+import core.time;
 import core.sys.posix.sys.stat;
 
 import ocean.transition;
-import ocean.core.Time;
 import ocean.core.Array;
 import ocean.core.Enforce;
 import ocean.core.Array;
@@ -287,7 +287,7 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
                 log.info("Test suite ready, sleeping for {} seconds before " ~
                     "running actual tests (--delay={})", this.config.delay,
                     this.config.delay);
-                Thread.sleep(seconds(this.config.delay));
+                Thread.sleep((cast(long)(this.config.delay * 10_000_000)).hnsecs);
             }
 
             if (this.config.list_only)
