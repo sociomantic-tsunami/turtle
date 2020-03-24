@@ -17,13 +17,13 @@ Support Guarantees
 Maintained Major Branches
 -------------------------
 
-====== ==================== ===============
-Major  Initial release date Supported until
-====== ==================== ===============
-v9.x.x v9.0.0_: 29/01/2018  TBD
-====== ==================== ===============
+======= ==================== ===============
+Major   Initial release date Supported until
+======= ==================== ===============
+v10.x.x v10.0.0_: 08/04/2019  TBD
+======= ==================== ===============
 
-.. _v9.0.0: https://github.com/sociomantic-tsunami/turtle/releases/tag/v9.0.0
+.. _v10.0.0: https://github.com/sociomantic-tsunami/turtle/releases/tag/v10.0.0
 
 Description
 ===========
