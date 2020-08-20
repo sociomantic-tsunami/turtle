@@ -83,7 +83,7 @@ public bool runAll ( ref Internal.RunnerConfig config, ref Context context,
 
     // enhance prepare hook with console output
     auto default_prepare = default_runner.iterator.prepare_hook;
-    default_runner.iterator.prepare_hook = (TestCase test_case) {
+    scope prepare_hook = (TestCase test_case) {
         auto desc = test_case.description();
         if (regex && !regex.match(desc.name))
             .log.trace("Skipping '{}'", desc.name);
@@ -91,14 +91,16 @@ public bool runAll ( ref Internal.RunnerConfig config, ref Context context,
             .log.info("Testing '{}' ...", test_case.description().name);
         default_prepare(test_case);
     };
+    default_runner.iterator.prepare_hook = prepare_hook;
 
     // don't reset anything if test is not run
     auto default_reset = default_runner.iterator.reset_hook;
-    default_runner.iterator.reset_hook = (TestCase test_case) {
+    scope reset_hook = (TestCase test_case) {
         auto desc = test_case.description();
         if (!regex || regex.match(desc.name))
             default_reset(test_case);
     };
+    default_runner.iterator.reset_hook = reset_hook;
 
     size_t ignored = 0;
     size_t progress = 0;

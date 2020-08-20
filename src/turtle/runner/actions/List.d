@@ -110,19 +110,21 @@ public struct ListOrderIterator
 
         auto iterator = Internal.TestCaseIterator(this.tests);
 
-        iterator.nesting_hook = (bool enters) {
+        scope hook = (bool enters) {
             if (enters)
                 ++nesting;
             else
                 --nesting;
         };
+        iterator.nesting_hook = hook;
 
         int result = 0;
 
-        iterator.prepare_hook = (TestCase test_case) {
+        scope prepare_hook = (TestCase test_case) {
             result = dg(nesting, i, test_case);
             ++i;
         };
+        iterator.prepare_hook = prepare_hook;
 
         foreach (unused; iterator)
         {
