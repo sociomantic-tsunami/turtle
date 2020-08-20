@@ -39,3 +39,9 @@ jobs:
           env: DIST=bionic DMD=2.078.* F=devel
         - <<: *test-matrix
           env: DIST=bionic DMD=2.085.* F=devel
+
+        # Additional stages
+        - stage: Closure allocation check
+          env: DMD=2.093.* F=devel
+          install: beaver dlang install
+          script: ci/closures.sh
