@@ -39,6 +39,10 @@ jobs:
           env: DIST=bionic DMD=2.078.* F=devel
         - <<: *test-matrix
           env: DIST=bionic DMD=2.085.* F=devel
+        - <<: *test-matrix
+          env: DIST=bionic DMD=2.091.* F=devel
+        - <<: *test-matrix
+          env: DIST=bionic DMD=2.093.* F=devel
 
         # Additional stages
         - stage: Closure allocation check
