@@ -127,7 +127,7 @@ abstract class TestedApplicationBase
 
     ***************************************************************************/
 
-    public abstract void start ( Const!(cstring)[] args = null )
+    public abstract void start ( const(cstring)[] args = null )
     {
         // disable previous kill timer if present
         this.kill_timer.reset();

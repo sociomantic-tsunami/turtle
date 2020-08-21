@@ -69,7 +69,7 @@ class ExternalProcess : EpollProcess
 
     ***************************************************************************/
 
-    private Const!(cstring)[] arguments;
+    private const(cstring)[] arguments;
 
     /***************************************************************************
 
@@ -94,7 +94,7 @@ class ExternalProcess : EpollProcess
     ***************************************************************************/
 
     public this ( cstring cmd, cstring work_dir,
-        Const!(cstring)[] arguments = null, istring[istring] env = null )
+        const(cstring)[] arguments = null, istring[istring] env = null )
     {
         this.errno_e = new ErrnoException;
         this.command = cmd;
@@ -175,7 +175,7 @@ class ExternalProcess : EpollProcess
 
     ***********************************************************************/
 
-    public override void start ( Const!(mstring)[] extra_args = null )
+    public override void start ( const(cstring)[] extra_args = null )
     {
         this.startImpl(extra_args);
     }
@@ -237,7 +237,7 @@ class ExternalProcess : EpollProcess
 
     ***************************************************************************/
 
-    protected void startImpl ( Const!(mstring)[] extra_args )
+    protected void startImpl ( const(cstring)[] extra_args )
     {
         this.process.setWorkDir(this.work_dir.dup);
         super.start(command ~ this.arguments ~ extra_args);

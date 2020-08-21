@@ -42,7 +42,7 @@ class TestedCliApplication : TestedApplicationBase
     private final class ExternalCliProcess : ExternalProcess
     {
         private this ( cstring cmd,
-            cstring work_dir, Const!(cstring)[] arguments = null,
+            cstring work_dir, const(cstring)[] arguments = null,
             istring[istring] env = null )
         {
             super(cmd, work_dir, arguments, env);
@@ -138,7 +138,7 @@ class TestedCliApplication : TestedApplicationBase
     ***************************************************************************/
 
     public this ( cstring executable_name, double timeout,
-        cstring sandbox, Const!(cstring)[] args = null, istring[istring] env = null )
+        cstring sandbox, const(cstring)[] args = null, istring[istring] env = null )
     {
         super(executable_name, sandbox);
         this.process = new ExternalCliProcess(this.executable_path, sandbox,
@@ -169,7 +169,7 @@ class TestedCliApplication : TestedApplicationBase
 
     ***************************************************************************/
 
-    override public void start ( Const!(cstring)[] args = null )
+    override public void start ( const(cstring)[] args = null )
     {
         this.stdout_buffer.length = 0;
         this.stderr_buffer.length = 0;
