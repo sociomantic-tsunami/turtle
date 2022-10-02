@@ -27,22 +27,22 @@ struct Context
     /// tested application (external process)
     TestedApplicationBase app;
     /// name of the tested binary (without dir path)
-    istring binary;
+    string binary;
     /// socket for communicating with tested application
     UnixSocket control_socket;
 
     static struct EnvPaths
     {
         /// working directory for tested application
-        istring sandbox;
+        string sandbox;
         /// fully-qualified path to tested binary
-        istring binary;
+        string binary;
         /// directory which contains all temporaries including sandbox
-        istring tmp_dir;
+        string tmp_dir;
         /// directory which contains `this.binary`
-        istring bin_dir;
+        string bin_dir;
         /// root project directory
-        istring top_dir;
+        string top_dir;
     }
 
     /// path configuration relevant to test cases

@@ -91,7 +91,7 @@ private class SimpleLayout : Appender.Layout
         dg (buffer[]);
         for (int i = 0; i < SimpleLayout.indent_count; i++)
             dg ("    ");
-        dg (event.toString());
+        dg (event.msg);
 
         buffer.length = 0;
         enableStomping(buffer);

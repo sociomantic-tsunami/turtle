@@ -183,13 +183,13 @@ abstract class TestedApplicationBase
     {
         enforce!(TurtleException)(
             Path.exists(this.executable_path),
-            cast(istring)("Test application " ~ this.executable_path ~
+            cast(string)("Test application " ~ this.executable_path ~
                 " does not exist!")
         );
 
         enforce!(TurtleException)(
             Path.isFile(this.executable_path),
-            cast(istring)(this.executable_path ~ " is not a file.")
+            cast(string)(this.executable_path ~ " is not a file.")
         );
 
         stat_t stats;
@@ -197,13 +197,13 @@ abstract class TestedApplicationBase
 
         enforce!(TurtleException)(
             stat(StringC.toCString(executable_path_c), &stats) == 0,
-            cast(istring)("Could not access file attributes for '" ~
+            cast(string)("Could not access file attributes for '" ~
                 this.executable_path ~ "'")
         );
 
         enforce!(TurtleException)(
             (stats.st_mode & S_IXUSR) != 0,
-            cast(istring)(this.executable_path ~ " is not an executable")
+            cast(string)(this.executable_path ~ " is not an executable")
         );
     }
 }

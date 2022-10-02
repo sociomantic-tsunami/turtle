@@ -30,7 +30,7 @@ class TurtleException : Exception
 
     ***************************************************************************/
 
-    this ( istring msg, istring file = __FILE__, long line = __LINE__ )
+    this ( string msg, string file = __FILE__, long line = __LINE__ )
     {
         super(msg, file, line, null);
     }

@@ -67,7 +67,7 @@ abstract class TestCase
     public static struct Description
     {
         /// name to use in trace output
-        istring name;
+        string name;
 
         /// if set to 'true', host will call `TurtleRunner.reset()` after
         /// running this test case. This is the default option to discourage

@@ -44,7 +44,7 @@ private struct Internal
 *******************************************************************************/
 
 public bool runAll ( ref Internal.RunnerConfig config, ref Context context,
-    void delegate() reset, istring[] disabled )
+    void delegate() reset, string[] disabled )
 {
     PCRE.CompiledRegex regex;
 

@@ -248,7 +248,7 @@ public class FatalFailureException : Exception
 
     ***************************************************************************/
 
-    this ( TestStats stats, istring file = __FILE__, int line = __LINE__ )
+    this ( TestStats stats, string file = __FILE__, int line = __LINE__ )
     {
         this.stats = stats;
         super ("Test case that was marked as fatal failed", file, line);

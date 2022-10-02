@@ -13,7 +13,7 @@ import turtle.runner.Runner;
 import turtle.TestCase;
 
 version (UnitTest) {} else
-int main ( istring[] args )
+int main ( string[] args )
 {
     auto runner = new TurtleRunner!(MyTurtleTests)("dummy_daemon", "");
     return runner.main(args);
@@ -22,7 +22,7 @@ int main ( istring[] args )
 class MyTurtleTests : TurtleRunnerTask!(TestedAppKind.Daemon)
 {
     override protected void configureTestedApplication ( out double delay,
-        out istring[] args, out istring[istring] env )
+        out string[] args, out string[string] env )
     {
         delay = 0.05;
         args  = null;

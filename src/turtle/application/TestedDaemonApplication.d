@@ -55,7 +55,7 @@ class TestedDaemonApplication : TestedApplicationBase
     private final class ExternalDaemonProcess : ExternalProcess
     {
         private this ( cstring cmd, cstring work_dir,
-            const(cstring)[] arguments = null, istring[istring] env = null )
+            const(cstring)[] arguments = null, string[string] env = null )
         {
             super(cmd, work_dir, arguments, env);
         }
@@ -119,7 +119,7 @@ class TestedDaemonApplication : TestedApplicationBase
     ***************************************************************************/
 
     public this ( cstring executable_name, double delay,
-        cstring sandbox, const(cstring)[] args = null, istring[istring] env = null )
+        cstring sandbox, const(cstring)[] args = null, string[string] env = null )
     {
         super(executable_name, sandbox);
         this.process = new ExternalDaemonProcess(this.executable_path, sandbox,

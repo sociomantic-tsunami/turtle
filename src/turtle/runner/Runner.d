@@ -154,7 +154,7 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
 
     ***************************************************************************/
 
-    protected istring test_package;
+    protected string test_package;
 
     /***************************************************************************
 
@@ -210,7 +210,7 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
 
     ***************************************************************************/
 
-    protected istring[] disabledTestCases ( ) { return null; }
+    protected string[] disabledTestCases ( ) { return null; }
 
     /***************************************************************************
 
@@ -413,8 +413,8 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
 
     public static struct CopyFileEntry
     {
-        istring src_path;
-        istring dst_path;
+        string src_path;
+        string dst_path;
     }
 
     static if (AutoStartTestedApp)
@@ -437,7 +437,7 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
         ***********************************************************************/
 
         abstract protected void configureTestedApplication (
-            out double duration, out istring[] args, out istring[istring] env );
+            out double duration, out string[] args, out string[string] env );
 
         /***********************************************************************
 
@@ -450,8 +450,8 @@ class TurtleRunnerTask ( TestedAppKind Kind ) : TaskWith!(ExceptionForwarding)
         private void createTestedApplication ( )
         {
             double delay;
-            istring[] iargs;
-            istring[istring] env;
+            string[] iargs;
+            string[string] env;
             this.configureTestedApplication(delay, iargs, env);
 
             // workaround until ocean Process has better const API
@@ -568,7 +568,7 @@ class TurtleRunner ( TaskT ) : CliApp
 
     ***************************************************************************/
 
-    public this ( istring binary, istring test_package = "" )
+    public this ( string binary, string test_package = "" )
     {
         .setupLogging();
 
@@ -708,7 +708,7 @@ class TurtleRunner ( TaskT ) : CliApp
 
         static if (TaskT.SetupSandbox)
         {
-            istring path;
+            string path;
 
             path = args.getString("tmpdir");
             if (path.length == 0)
@@ -766,7 +766,7 @@ unittest
         override void prepare ( ) { }
 
         override protected void configureTestedApplication (
-            out double, out istring[], out istring[istring] ) { }
+            out double, out string[], out string[string] ) { }
     }
 
     static class Three : TurtleRunnerTask!(TestedAppKind.CLI)
@@ -774,7 +774,7 @@ unittest
         override void prepare ( ) { }
 
         override protected void configureTestedApplication (
-            out double, out istring[], out istring[istring] ) { }
+            out double, out string[], out string[string] ) { }
     }
 
     static class Four : TurtleRunnerTask!(TestedAppKind.None)

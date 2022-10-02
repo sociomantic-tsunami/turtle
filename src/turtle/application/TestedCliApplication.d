@@ -43,7 +43,7 @@ class TestedCliApplication : TestedApplicationBase
     {
         private this ( cstring cmd,
             cstring work_dir, const(cstring)[] arguments = null,
-            istring[istring] env = null )
+            string[string] env = null )
         {
             super(cmd, work_dir, arguments, env);
         }
@@ -138,7 +138,7 @@ class TestedCliApplication : TestedApplicationBase
     ***************************************************************************/
 
     public this ( cstring executable_name, double timeout,
-        cstring sandbox, const(cstring)[] args = null, istring[istring] env = null )
+        cstring sandbox, const(cstring)[] args = null, string[string] env = null )
     {
         super(executable_name, sandbox);
         this.process = new ExternalCliProcess(this.executable_path, sandbox,
