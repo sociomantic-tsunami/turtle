@@ -53,7 +53,7 @@ class MyTurtleRunnerTask : TurtleRunnerTask!(TestedAppKind.Daemon)
     ***************************************************************************/
 
     override protected void configureTestedApplication ( out double delay,
-        out istring[] args, out istring[istring] env )
+        out string[] args, out string[string] env )
     {
         delay = 0.5;  // wait time between starting the app and running tests
         args  = null; // any CLI arguments
@@ -100,7 +100,7 @@ class MyTurtleRunnerTask : TurtleRunnerTask!(TestedAppKind.Daemon)
 
 *******************************************************************************/
 
-int main ( istring[] args )
+int main ( string[] args )
 {
     auto name = "example"[];
     auto test_package = "example.daemon"[];

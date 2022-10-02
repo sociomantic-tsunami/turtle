@@ -47,7 +47,7 @@ import turtle.TestCase;
 
 *******************************************************************************/
 
-public istring sendCommand ( UnixSocket sock, cstring command, cstring args = "")
+public string sendCommand ( UnixSocket sock, cstring command, cstring args = "")
 {
     enforce(sock !is null);
 
@@ -58,7 +58,7 @@ public istring sendCommand ( UnixSocket sock, cstring command, cstring args = ""
 }
 
 /// ditto
-public istring sendCommand ( TestCase tc, cstring command, cstring args = "")
+public string sendCommand ( TestCase tc, cstring command, cstring args = "")
 {
     auto sock = tc.context.control_socket;
     return sendCommand(sock, command, args);

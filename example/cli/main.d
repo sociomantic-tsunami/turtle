@@ -35,7 +35,7 @@ class MyTurtleRunnerTask : TurtleRunnerTask!(TestedAppKind.CLI)
     ***************************************************************************/
 
     override protected void configureTestedApplication ( out double timeout,
-        out istring[] args, out istring[istring] env )
+        out string[] args, out string[string] env )
     {
         timeout = 0.5; // wait time before tested app will get killed
         args  = [ "--message" ];  // any CLI arguments
@@ -62,7 +62,7 @@ class MyTurtleRunnerTask : TurtleRunnerTask!(TestedAppKind.CLI)
 
 *******************************************************************************/
 
-int main ( istring[] args )
+int main ( string[] args )
 {
     auto name = "example"[];
     auto test_package = "example.cli"[];

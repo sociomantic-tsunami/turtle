@@ -21,7 +21,7 @@ import ocean.transition;
 
 class VerifyTestOrder : TurtleRunnerTask!(TestedAppKind.None)
 {
-    override istring[] disabledTestCases ( )
+    override string[] disabledTestCases ( )
     {
         return [ "test.order.main.DisabledTest" ];
     }
@@ -38,7 +38,7 @@ class VerifyTestOrder : TurtleRunnerTask!(TestedAppKind.None)
 long total_tests_run;
 
 version (UnitTest) {} else
-int main ( istring[] args )
+int main ( string[] args )
 {
     auto runner = new TurtleRunner!(VerifyTestOrder)("", "");
     auto status = runner.main(args);

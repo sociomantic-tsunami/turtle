@@ -164,7 +164,7 @@ public struct TestCaseIterator
 
 *******************************************************************************/
 
-public TestCase[] findTestCases(istring test_package)
+public TestCase[] findTestCases(string test_package)
 {
     TestCase[] tests;
 

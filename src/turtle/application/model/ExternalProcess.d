@@ -94,7 +94,7 @@ class ExternalProcess : EpollProcess
     ***************************************************************************/
 
     public this ( cstring cmd, cstring work_dir,
-        const(cstring)[] arguments = null, istring[istring] env = null )
+        const(cstring)[] arguments = null, string[string] env = null )
     {
         this.errno_e = new ErrnoException;
         this.command = cmd;

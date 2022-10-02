@@ -19,13 +19,13 @@ import turtle.TestCase;
 class TestedAppNotRunning : TurtleRunnerTask!(TestedAppKind.CLI)
 {
     override protected void configureTestedApplication ( out double delay,
-        out istring[] args, out istring[istring] env ) { }
+        out string[] args, out string[string] env ) { }
     override public void prepare ( ) { }
     override public void reset ( ) { }
 }
 
 version (UnitTest) {} else
-int main ( istring[] args )
+int main ( string[] args )
 {
     auto runner = new TurtleRunner!(TestedAppNotRunning)("dummy_cli", "");
     return runner.main(args);

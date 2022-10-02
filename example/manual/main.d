@@ -76,7 +76,7 @@ class MyTurtleRunnerTask : TurtleRunnerTask!(TestedAppKind.Manual)
 
 *******************************************************************************/
 
-int main ( istring[] args )
+int main ( string[] args )
 {
     auto name = "example"[];
     auto test_package = "example.manual"[];
